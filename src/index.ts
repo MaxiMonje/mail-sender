@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
-
+import "./polyfills/web-file";
 import mailRouter from "./routes/mailRouter";
 import errorHandler from "./middlewares/errorHandler";
 import { verifyEmailConnection } from "./utils/emailClient";

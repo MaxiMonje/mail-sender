@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>{{subject}}</title>
+    <style>
+      .container{max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #e5e7eb;border-radius:8px;}
+      .content{padding:24px;font-family:Arial, Helvetica, sans-serif;color:#0f172a;}
+      h1{font-size:20px;margin:0 0 12px;}
+      p{font-size:14px;line-height:1.6;margin:0 0 12px;}
+    </style>
+  </head>
+  <body style="background:#f8fafc;padding:24px;">
+    {{> header brandName=brandName}}
+    <div class="container">
+      <div class="content">
+        <h1>{{headline}}</h1>
+        {{{bodyHtml}}}
+      </div>
+    </div>
+    {{> footer brandName=brandName year=year}}
+  </body>
+</html>

@@ -1,21 +1,22 @@
 import { z } from "zod";
 
 export const sendMailSchema = z.object({
-  to: z.union([
-    z.string().email(),
-    z.array(z.string().email()).nonempty()
-  ]),
-  subject: z.string().min(1, { message: "subject is required" }),
+  to: z.string().email().or(z.array(z.string().email()).nonempty()),
+  subject: z.string().min(1),
   text: z.string().optional(),
   html: z.string().optional(),
-  cc: z.union([z.string().email(), z.array(z.string().email())]).optional(),
-  bcc: z.union([z.string().email(), z.array(z.string().email())]).optional(),
+  template: z.string().optional(),                  // p.ej. "reset-password"
+  variables: z.record(z.string(), z.any()).optional(), // <— FIX: record(keyType, valueType)
+  cc: z.string().email().or(z.array(z.string().email())).optional(),
+  bcc: z.string().email().or(z.array(z.string().email())).optional(),
   attachments: z.array(z.object({
     filename: z.string(),
     content: z.string().optional(),
     path: z.string().optional(),
     contentType: z.string().optional()
   })).optional()
-}).refine(v => v.text || v.html, { message: "Provide text or html" });
+}).refine(v => v.text || v.html || v.template, {
+  message: "Provide text, html or template"
+});
 
 export type SendMailDto = z.infer<typeof sendMailSchema>;
